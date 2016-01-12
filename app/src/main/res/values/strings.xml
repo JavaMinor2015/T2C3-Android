@@ -11,4 +11,6 @@
     <string name="columnItemAmount">Item amount</string>
     <string name="columnTotalPrice">Total price</string>
     <string name="columnStatus">Status</string>
+    <string name="title_order_list">Orders</string>
+    <string name="title_order_detail">Order Detail</string>
 </resources>
