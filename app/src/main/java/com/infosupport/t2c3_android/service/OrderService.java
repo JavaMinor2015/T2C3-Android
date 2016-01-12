@@ -11,6 +11,6 @@ import retrofit2.http.GET;
  * Created by koen on 1/12/16.
  */
 public interface OrderService {
-    @GET("orders")
+    @GET("order")
     Call<List<Order>> listOrders();
 }

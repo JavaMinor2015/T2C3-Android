@@ -2,6 +2,7 @@ package com.infosupport.t2c3_android.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -29,6 +30,8 @@ public class MainActivity extends Activity {
     private static final String BASE_URL = "http://10.32.42.76:6789";
     private Retrofit retrofit;
 
+    private static int statusCode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +53,15 @@ public class MainActivity extends Activity {
     }
 
     private void retrieveOrders() {
-        List<Order> orders = new ArrayList<>();
+
         OrderService orderService = retrofit.create(OrderService.class);
         Call<List<Order>> callOrdersGetRequest = orderService.listOrders();
         callOrdersGetRequest.enqueue(new Callback<List<Order>>() {
 
             @Override
             public void onResponse(Response<List<Order>> response) {
-                int statusCode = response.code();
+                statusCode = response.code();
+                System.out.println(statusCode);
                 List<Order> orders = response.body();
                 addToAdapter(orders);
             }
