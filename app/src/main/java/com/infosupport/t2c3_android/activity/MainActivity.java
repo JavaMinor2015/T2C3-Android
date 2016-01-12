@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.infosupport.t2c3_android.R;
 import com.infosupport.t2c3_android.adapter.OrderAdapter;
 import com.infosupport.t2c3_android.pojo.Order;
@@ -27,17 +26,19 @@ public class MainActivity extends Activity {
     private ListView orderList;
     private OrderAdapter orderAdapter;
 
-    Gson gson = new Gson();
-    public static final String BASE_URL = "http://localhost:6789";
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build();
+    private static final String BASE_URL = "http://10.32.42.76:6789";
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Connect to REST endpoint with basic Gson configuration
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(new Gson()))
+                .build();
 
         ArrayList<Order> orders = new ArrayList<Order>();
         orderAdapter = new OrderAdapter(this, orders);
@@ -49,7 +50,7 @@ public class MainActivity extends Activity {
     }
 
     private void retrieveOrders() {
-
+        List<Order> orders = new ArrayList<>();
         OrderService orderService = retrofit.create(OrderService.class);
         Call<List<Order>> callOrdersGetRequest = orderService.listOrders();
         callOrdersGetRequest.enqueue(new Callback<List<Order>>() {
@@ -58,18 +59,21 @@ public class MainActivity extends Activity {
             public void onResponse(Response<List<Order>> response) {
                 int statusCode = response.code();
                 List<Order> orders = response.body();
-
-                //TODO: foreach loop
-//                for (Order order : orders) {
-//                    orderAdapter.add(order);
-//                }
+                addToAdapter(orders);
             }
 
             @Override
             public void onFailure(Throwable t) {
-                // Log error here since request failed
+                //TODO: log failed REST Call
             }
         });
+
+    }
+
+    private void addToAdapter(List<Order> orders) {
+        for (Order order : orders) {
+            orderAdapter.add(order);
+        }
     }
 
     public String loadJSONFromAsset() {
