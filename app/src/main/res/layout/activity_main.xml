@@ -15,14 +15,17 @@
         android:id="@+id/orderTableLayout"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="97dp" >
+        android:layout_marginTop="20dp" >
 
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/row_blue_bg">
+            android:background="@drawable/valuecellborder">
             <TextView android:text="@string/columnID"
+                android:textStyle="bold"
+                android:textSize="8pt"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_column="0"
                 android:layout_weight="1"/>
             <!--<TextView android:text="@string/columnFirstName"-->
@@ -36,17 +39,26 @@
                 <!--android:layout_weight="1">-->
             <!--</TextView>-->
             <TextView android:text="@string/columnItemAmount"
+                android:textStyle="bold"
+                android:textSize="8pt"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_column="1"
                 android:layout_weight="1">
             </TextView>
             <TextView android:text="@string/columnTotalPrice"
+                android:textStyle="bold"
+                android:textSize="8pt"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_column="2"
                 android:layout_weight="1">
             </TextView>
             <TextView android:text="@string/columnStatus"
+                android:textStyle="bold"
+                android:textSize="8pt"
                 android:layout_width="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_column="3"
                 android:layout_weight="1">
             </TextView>

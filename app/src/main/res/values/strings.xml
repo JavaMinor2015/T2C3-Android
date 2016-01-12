@@ -5,8 +5,8 @@
         completions."
     </string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="columnLastName">Lastname</string>
-    <string name="columnFirstName">Firstname</string>
+    <string name="columnLastName">Last name</string>
+    <string name="columnFirstName">First name</string>
     <string name="columnID">ID</string>
     <string name="columnItemAmount">Item amount</string>
     <string name="columnTotalPrice">Total price</string>
