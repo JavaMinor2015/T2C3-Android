@@ -29,8 +29,8 @@ public class OrderAdapter extends ArrayAdapter<Order> {
         }
         // Lookup view for data population
         TextView tvOrderID = (TextView) convertView.findViewById(R.id.tvOrderId);
-        TextView tvFirstName = (TextView) convertView.findViewById(R.id.tvFirstName);
-        TextView tvLastName = (TextView) convertView.findViewById(R.id.tvLastName);
+//        TextView tvFirstName = (TextView) convertView.findViewById(R.id.tvFirstName);
+//        TextView tvLastName = (TextView) convertView.findViewById(R.id.tvLastName);
         TextView tvNumberOfItems = (TextView) convertView.findViewById(R.id.tvNumberOfItems);
         TextView tvOrderTotalPrice = (TextView) convertView.findViewById(R.id.tvOderTotalPrice);
         TextView tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
@@ -38,8 +38,8 @@ public class OrderAdapter extends ArrayAdapter<Order> {
 
         //TODO: Set values
         tvOrderID.setText(String.valueOf(order.id));
-        tvFirstName.setText(String.valueOf(order.customerData.firstName));
-        tvLastName.setText(String.valueOf(order.customerData.lastName));
+//        tvFirstName.setText(String.valueOf(order.customerData.firstName));
+//        tvLastName.setText(String.valueOf(order.customerData.lastName));
         tvNumberOfItems.setText(String.valueOf(order.items.size()));
         tvOrderTotalPrice.setText(String.valueOf(order.totalPrice));
         tvStatus.setText(String.valueOf(order.status));
