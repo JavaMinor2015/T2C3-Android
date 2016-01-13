@@ -49,10 +49,10 @@ public class OrderListActivity extends AppCompatActivity {
     private static List<Order> ordersList = new ArrayList<>();
     private View recyclerView;
 
-    //TODO: Properties for making connection to REST endpoint
     //Change this to your local IP-Networking address to use the Spring REST implementation on your mobile phone
     private static final String BASE_URL = "http://10.32.42.76:6789";
 //    private static final String BASE_URL = "http://192.168.178.12:6789";
+
     private Retrofit retrofit;
 
     @Override
@@ -94,7 +94,6 @@ public class OrderListActivity extends AppCompatActivity {
         recyclerView.setAdapter(new OrderRecyclerViewAdapter(ordersList));
     }
 
-    //TODO: Change complete class to match with OrderAdapter
     public class OrderRecyclerViewAdapter
             extends RecyclerView.Adapter<OrderRecyclerViewAdapter.ViewHolder> {
 
@@ -115,13 +114,11 @@ public class OrderListActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
             holder.mOrderIdView.setText(mValues.get(position).id.toString());
-
-            //TODO: Add more values
             holder.mNumberOfItemsView.setText(String.valueOf(mValues.get(position).items.size()));
             holder.mOrderTotalPriceView.setText(String.valueOf(mValues.get(position).totalPrice));
 
             //TODO: WORKAROUND change when default status is changed
-            holder.mStatusView.setText("OPEN");
+            holder.mStatusView.setText(String.valueOf(mValues.get(position).status.toString()));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -177,27 +174,18 @@ public class OrderListActivity extends AppCompatActivity {
     }
 
     private void retrieveOrders() {
-//        OrderService orderService = retrofit.create(OrderService.class);
-//        Call<List<Order>> call = orderService.listOrders();
-//        try {
-//            ordersList = call.execute().body();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        //Don't remove Asynchronous call
-
         OrderService orderService = retrofit.create(OrderService.class);
         Call<List<Order>> callOrdersGetRequest = orderService.listOrders();
         callOrdersGetRequest.enqueue(new Callback<List<Order>>() {
 
             @Override
             public void onResponse(Response<List<Order>> response) {
-                if (response.code() == 200) {
+                int HTTPStatusCode = response.code();
+                if (HTTPStatusCode == 200) {
                     ordersList = response.body();
                     setupRecyclerView((RecyclerView) recyclerView);
                 } else {
-                    //TODO: log failed - show response code
+                    Log.d("Failed, HTTP code: ", String.valueOf(HTTPStatusCode));
                 }
             }
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  * Created by koen on 1/12/16.
@@ -13,4 +14,8 @@ import retrofit2.http.GET;
 public interface OrderService {
     @GET("order")
     Call<List<Order>> listOrders();
+
+    @GET("employeeorder/{id}")
+    Call<Order> getOrder(@Path("id") String id);
+
 }
