@@ -3,7 +3,7 @@ package com.infosupport.t2c3_android.pojo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CustomerData {
+public class Address {
 
     @SerializedName("id")
     @Expose
@@ -11,17 +11,17 @@ public class CustomerData {
     @SerializedName("version")
     @Expose
     public Integer version;
-    @SerializedName("firstName")
+    @SerializedName("city")
     @Expose
-    public String firstName;
-    @SerializedName("lastName")
+    public String city;
+    @SerializedName("street")
     @Expose
-    public String lastName;
-    @SerializedName("emailAddress")
+    public String street;
+    @SerializedName("streetNumber")
     @Expose
-    public String emailAddress;
-    @SerializedName("address")
+    public String streetNumber;
+    @SerializedName("zipcode")
     @Expose
-    public Address address;
+    public String zipcode;
 
 }

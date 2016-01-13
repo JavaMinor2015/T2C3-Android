@@ -1,6 +1,9 @@
 package com.infosupport.t2c3_android.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.infosupport.t2c3_android.R;
@@ -16,6 +23,7 @@ import com.infosupport.t2c3_android.pojo.Order;
 import com.infosupport.t2c3_android.service.OrderService;
 import com.infosupport.t2c3_android.service.RetrofitConn;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +44,10 @@ public class OrderDetailFragment extends Fragment {
      */
 
     public static final String ARG_ITEM_ID = "id";
+    public static OrderService orderService;
+    public Spinner statusSpinner;
 
+    private AlertDialog alertDialog;
     private Retrofit retrofit;
     /**
      * The dummy content this fragment is presenting.
@@ -61,7 +72,7 @@ public class OrderDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
 
-            OrderService orderService = retrofit.create(OrderService.class);
+            orderService = retrofit.create(OrderService.class);
             Call<Order> callOrdersGetRequest = orderService.getOrder(getArguments().getString(ARG_ITEM_ID));
             callOrdersGetRequest.enqueue(new Callback<Order>() {
 
@@ -70,7 +81,12 @@ public class OrderDetailFragment extends Fragment {
                     int HTTPStatusCode = response.code();
                     if (HTTPStatusCode == 200) {
                         mItem = response.body();
-                        ((TextView) rootView.findViewById(R.id.order_detail)).setText(mItem.customerData.emailAddress);
+                        ((TextView) rootView.findViewById(R.id.orderID)).setText(String.valueOf(mItem.id));
+                        ((TextView) rootView.findViewById(R.id.orderCustomerFirstAndLastName)).setText(mItem.customerData.firstName + " " + mItem.customerData.lastName);
+                        ((TextView) rootView.findViewById(R.id.orderCustomerStreetAndNumber)).setText(mItem.customerData.address.street + " " + mItem.customerData.address.streetNumber);
+                        ((TextView) rootView.findViewById(R.id.orderCustomerZipcode)).setText(mItem.customerData.address.zipcode);
+                        ((TextView) rootView.findViewById(R.id.orderCustomerCity)).setText(mItem.customerData.address.city);
+                        ((TextView) rootView.findViewById(R.id.orderCustomerEmail)).setText(mItem.customerData.emailAddress);
 
                         showDetailFragment();
 
@@ -91,26 +107,70 @@ public class OrderDetailFragment extends Fragment {
         Activity activity = this.getActivity();
         CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
         if (appBarLayout != null) {
-            appBarLayout.setTitle(String.valueOf(mItem.id));
+            appBarLayout.setTitle("Order-number: " + String.valueOf(mItem.id));
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.order_detail, container, false);
+        statusSpinner = (Spinner) rootView.findViewById(R.id.statusSpinner);
+        setStatusSpinner(statusSpinner);
+        Button changeOrderBtn = (Button) rootView.findViewById(R.id.btnChangeOrder);
+        alertDialog = new AlertDialog.Builder(super.getActivity()).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
 
-        ((TextView) rootView.findViewById(R.id.order_detail)).setText("BlaBlaOnCreateViewShit");
-        if(mItem != null) {
-            //TODO: Fill in other TextViews
-            ((TextView) rootView.findViewById(R.id.order_detail)).setText(mItem.customerData.emailAddress);
-        }
-
+        changeOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateStatus();
+            }
+        });
         return rootView;
     }
+
+    private void updateStatus() {
+        Call<Order> callPostOrderStatusRequest = orderService.postOrderStatus(statusSpinner.getSelectedItem().toString());
+        callPostOrderStatusRequest.enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Response<Order> response) {
+                int HTTPStatusCode = response.code();
+                if (HTTPStatusCode == 200) {
+                    alertDialog.show();
+                } else {
+                    Log.d("Failed, HTTP code: ", String.valueOf(HTTPStatusCode));
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("Error", t.getMessage());
+            }
+        });
+    }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    private void setStatusSpinner(Spinner statusSpinner) {
+        List<String> statusList = new ArrayList<>();
+        statusList.add("PROGRESS");
+        statusList.add("OPEN");
+        statusList.add("CLOSED");
+
+        ArrayAdapter<String> statusDataAdapter = new ArrayAdapter<>(super.getActivity(), android.R.layout.simple_spinner_item, statusList);
+        statusDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statusSpinner.setAdapter(statusDataAdapter);
     }
 }

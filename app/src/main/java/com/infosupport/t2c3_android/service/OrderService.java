@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -18,4 +19,6 @@ public interface OrderService {
     @GET("employeeorder/{id}")
     Call<Order> getOrder(@Path("id") String id);
 
+    @POST("employeeorder/{status}")
+    Call<Order> postOrderStatus(@Path("status") String status);
 }
