@@ -1,23 +1,17 @@
 package com.infosupport.t2c3_android.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.infosupport.t2c3_android.R;
 import com.infosupport.t2c3_android.pojo.Order;
@@ -49,13 +43,12 @@ public class OrderDetailFragment extends Fragment {
     public static OrderService orderService;
     public Spinner statusSpinner;
 
-    private AlertDialog alertDialog;
-    private Retrofit retrofit;
+    private static Retrofit retrofit;
     /**
      * The dummy content this fragment is presenting.
      */
     //TODO: Change with specific order POJO
-    private Order mItem;
+    private Order order;
     private View rootView;
 
     /**
@@ -82,13 +75,13 @@ public class OrderDetailFragment extends Fragment {
                 public void onResponse(Response<Order> response) {
                     int HTTPStatusCode = response.code();
                     if (HTTPStatusCode == 200) {
-                        mItem = response.body();
-                        ((TextView) rootView.findViewById(R.id.orderID)).setText(String.valueOf(mItem.id));
-                        ((TextView) rootView.findViewById(R.id.orderCustomerFirstAndLastName)).setText(mItem.customerData.firstName + " " + mItem.customerData.lastName);
-                        ((TextView) rootView.findViewById(R.id.orderCustomerStreetAndNumber)).setText(mItem.customerData.address.street + " " + mItem.customerData.address.streetNumber);
-                        ((TextView) rootView.findViewById(R.id.orderCustomerZipcode)).setText(mItem.customerData.address.zipcode);
-                        ((TextView) rootView.findViewById(R.id.orderCustomerCity)).setText(mItem.customerData.address.city);
-                        ((TextView) rootView.findViewById(R.id.orderCustomerEmail)).setText(mItem.customerData.emailAddress);
+                        order = response.body();
+                        ((TextView) rootView.findViewById(R.id.orderID)).setText(String.valueOf(order.id));
+                        ((TextView) rootView.findViewById(R.id.orderCustomerFirstAndLastName)).setText(order.customerData.firstName + " " + order.customerData.lastName);
+                        ((TextView) rootView.findViewById(R.id.orderCustomerStreetAndNumber)).setText(order.customerData.address.street + " " + order.customerData.address.streetNumber);
+                        ((TextView) rootView.findViewById(R.id.orderCustomerZipcode)).setText(order.customerData.address.zipcode);
+                        ((TextView) rootView.findViewById(R.id.orderCustomerCity)).setText(order.customerData.address.city);
+                        ((TextView) rootView.findViewById(R.id.orderCustomerEmail)).setText(order.customerData.emailAddress);
                         setStatusSpinner(statusSpinner);
                         showDetailFragment();
 
@@ -109,7 +102,7 @@ public class OrderDetailFragment extends Fragment {
         Activity activity = this.getActivity();
         CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
         if (appBarLayout != null) {
-            appBarLayout.setTitle("Order-number: " + String.valueOf(mItem.id));
+            appBarLayout.setTitle("Order-number: " + String.valueOf(order.id));
         }
     }
 
@@ -117,6 +110,8 @@ public class OrderDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.order_detail, container, false);
+
+        //Add listeners to controls
         statusSpinner = (Spinner) rootView.findViewById(R.id.statusSpinner);
         Button changeOrderBtn = (Button) rootView.findViewById(R.id.btnChangeOrder);
         changeOrderBtn.setOnClickListener(new View.OnClickListener() {
@@ -125,12 +120,13 @@ public class OrderDetailFragment extends Fragment {
                 updateStatus();
             }
         });
+
         return rootView;
     }
 
     private void updateStatus() {
-        mItem.status = statusSpinner.getSelectedItem();
-        Call<Order> callPostOrderStatusRequest = orderService.postOrderStatus(mItem);
+        order.status = statusSpinner.getSelectedItem();
+        Call<Order> callPostOrderStatusRequest = orderService.postOrderStatus(order);
         callPostOrderStatusRequest.enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Response<Order> response) {
@@ -157,15 +153,19 @@ public class OrderDetailFragment extends Fragment {
 
     private void setStatusSpinner(Spinner statusSpinner) {
         List<OrderStatus> statusList = new ArrayList<>();
-        statusList.add(OrderStatus.PLACED);
-        statusList.add(OrderStatus.REJECTED);
-        statusList.add(OrderStatus.SENT);
+        for (OrderStatus orderStatus : OrderStatus.values()) {
+            statusList.add(orderStatus);
+        }
+
+//        statusList.add(OrderStatus.PLACED);
+//        statusList.add(OrderStatus.REJECTED);
+//        statusList.add(OrderStatus.SENT);
 
         ArrayAdapter<OrderStatus> statusDataAdapter = new ArrayAdapter<>(super.getActivity(), android.R.layout.simple_spinner_item, OrderStatus.values());
         statusDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(statusDataAdapter);
 
-        OrderStatus orderStatusValue = OrderStatus.valueOf(String.valueOf(mItem.status));
+        OrderStatus orderStatusValue = OrderStatus.valueOf(String.valueOf(order.status));
         if (!orderStatusValue.equals(null)) {
             int spinnerPosition = statusDataAdapter.getPosition(orderStatusValue);
             statusSpinner.setSelection(spinnerPosition);

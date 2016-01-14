@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +14,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.infosupport.t2c3_android.R;
-
 import com.infosupport.t2c3_android.pojo.Order;
 import com.infosupport.t2c3_android.service.OrderService;
 import com.infosupport.t2c3_android.service.RetrofitConn;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +46,7 @@ public class OrderListActivity extends AppCompatActivity {
 
     //Change this to your local IP-Networking address to use the Spring REST implementation on your mobile phone
     private static final String BASE_URL = "http://10.32.42.76:6789";
-//    private static final String BASE_URL = "http://192.168.178.12:6789";
-
-    private Retrofit retrofit;
+    private static Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
