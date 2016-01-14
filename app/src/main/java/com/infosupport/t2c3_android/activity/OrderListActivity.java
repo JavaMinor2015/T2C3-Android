@@ -50,8 +50,8 @@ public class OrderListActivity extends AppCompatActivity {
     private View recyclerView;
 
     //Change this to your local IP-Networking address to use the Spring REST implementation on your mobile phone
-//    private static final String BASE_URL = "http://10.32.42.76:6789";
-    private static final String BASE_URL = "http://192.168.178.12:6789";
+    private static final String BASE_URL = "http://10.32.42.76:6789";
+//    private static final String BASE_URL = "http://192.168.178.12:6789";
 
     private Retrofit retrofit;
 

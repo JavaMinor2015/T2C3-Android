@@ -17,9 +17,11 @@ import android.widget.Button;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.infosupport.t2c3_android.R;
 import com.infosupport.t2c3_android.pojo.Order;
+import com.infosupport.t2c3_android.pojo.OrderStatus;
 import com.infosupport.t2c3_android.service.OrderService;
 import com.infosupport.t2c3_android.service.RetrofitConn;
 
@@ -118,6 +120,12 @@ public class OrderDetailFragment extends Fragment {
         statusSpinner = (Spinner) rootView.findViewById(R.id.statusSpinner);
         setStatusSpinner(statusSpinner);
         Button changeOrderBtn = (Button) rootView.findViewById(R.id.btnChangeOrder);
+        changeOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateStatus();
+            }
+        });
         alertDialog = new AlertDialog.Builder(super.getActivity()).create();
         alertDialog.setTitle("Alert");
         alertDialog.setMessage("Alert message to be shown");
@@ -127,18 +135,12 @@ public class OrderDetailFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
-
-        changeOrderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateStatus();
-            }
-        });
         return rootView;
     }
 
     private void updateStatus() {
-        Call<Order> callPostOrderStatusRequest = orderService.postOrderStatus(statusSpinner.getSelectedItem().toString());
+        mItem.status = statusSpinner.getSelectedItem();
+        Call<Order> callPostOrderStatusRequest = orderService.postOrderStatus(mItem);
         callPostOrderStatusRequest.enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Response<Order> response) {
@@ -164,12 +166,12 @@ public class OrderDetailFragment extends Fragment {
     }
 
     private void setStatusSpinner(Spinner statusSpinner) {
-        List<String> statusList = new ArrayList<>();
-        statusList.add("PROGRESS");
-        statusList.add("OPEN");
-        statusList.add("CLOSED");
+        List<OrderStatus> statusList = new ArrayList<>();
+        statusList.add(OrderStatus.PLACED);
+        statusList.add(OrderStatus.REJECTED);
+        statusList.add(OrderStatus.SENT);
 
-        ArrayAdapter<String> statusDataAdapter = new ArrayAdapter<>(super.getActivity(), android.R.layout.simple_spinner_item, statusList);
+        ArrayAdapter<OrderStatus> statusDataAdapter = new ArrayAdapter<>(super.getActivity(), android.R.layout.simple_spinner_item, OrderStatus.values());
         statusDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(statusDataAdapter);
     }
