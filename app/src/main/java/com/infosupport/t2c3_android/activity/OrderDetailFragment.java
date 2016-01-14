@@ -89,7 +89,7 @@ public class OrderDetailFragment extends Fragment {
                         ((TextView) rootView.findViewById(R.id.orderCustomerZipcode)).setText(mItem.customerData.address.zipcode);
                         ((TextView) rootView.findViewById(R.id.orderCustomerCity)).setText(mItem.customerData.address.city);
                         ((TextView) rootView.findViewById(R.id.orderCustomerEmail)).setText(mItem.customerData.emailAddress);
-
+                        setStatusSpinner(statusSpinner);
                         showDetailFragment();
 
                     } else {
@@ -118,7 +118,6 @@ public class OrderDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.order_detail, container, false);
         statusSpinner = (Spinner) rootView.findViewById(R.id.statusSpinner);
-        setStatusSpinner(statusSpinner);
         Button changeOrderBtn = (Button) rootView.findViewById(R.id.btnChangeOrder);
         changeOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,15 +125,6 @@ public class OrderDetailFragment extends Fragment {
                 updateStatus();
             }
         });
-        alertDialog = new AlertDialog.Builder(super.getActivity()).create();
-        alertDialog.setTitle("Alert");
-        alertDialog.setMessage("Alert message to be shown");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
         return rootView;
     }
 
@@ -146,7 +136,7 @@ public class OrderDetailFragment extends Fragment {
             public void onResponse(Response<Order> response) {
                 int HTTPStatusCode = response.code();
                 if (HTTPStatusCode == 200) {
-                    alertDialog.show();
+
                 } else {
                     Log.d("Failed, HTTP code: ", String.valueOf(HTTPStatusCode));
                 }
@@ -174,5 +164,12 @@ public class OrderDetailFragment extends Fragment {
         ArrayAdapter<OrderStatus> statusDataAdapter = new ArrayAdapter<>(super.getActivity(), android.R.layout.simple_spinner_item, OrderStatus.values());
         statusDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(statusDataAdapter);
+
+        OrderStatus orderStatusValue = OrderStatus.valueOf(String.valueOf(mItem.status));
+        if (!orderStatusValue.equals(null)) {
+            int spinnerPosition = statusDataAdapter.getPosition(orderStatusValue);
+            statusSpinner.setSelection(spinnerPosition);
+        }
     }
+
 }

@@ -90,6 +90,13 @@ public class OrderListActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        retrieveOrders();
+    }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new OrderRecyclerViewAdapter(ordersList));
     }
