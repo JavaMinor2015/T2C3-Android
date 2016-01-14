@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">T2C3-Android</string>
+    <string name="app_name">Kantilever</string>
+
+    <!--<string name="columnLastName">Last name</string>-->
+    <!--<string name="columnFirstName">First name</string>-->
+    <!--<string name="columnID">ID</string>-->
+    <!--<string name="columnItemAmount">Item amount</string>-->
+    <!--<string name="columnTotalPrice">Total price</string>-->
+    <!--<string name="columnStatus">Status</string>-->
+    <string name="title_order_list">Orders</string>
+    <string name="title_order_detail">Order Detail</string>
 </resources>

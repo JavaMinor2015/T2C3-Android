@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "version": 0,
+    "totalPrice": 0.54,
+    "status": null,
+    "items": [
+      {
+        "id": 1,
+        "version": 0,
+        "price": 0.05,
+        "amount": 1,
+        "product": {
+          "id": 1,
+          "version": 0,
+          "name": "Thing #477535960",
+          "price": 0.05,
+          "category": "PART",
+          "supplier": "Meme",
+          "available": true,
+          "imageURL": "meme"
+        }
+      },
+      {
+        "id": 2,
+        "version": 0,
+        "price": 0.49,
+        "amount": 1,
+        "product": {
+          "id": 2,
+          "version": 0,
+          "name": "Thing #-21052014",
+          "price": 0.49,
+          "category": "BICYCLE",
+          "supplier": "Meme",
+          "available": true,
+          "imageURL": "meme"
+        }
+      }
+    ],
+    "customerData": {
+      "id": 1,
+      "version": 0,
+      "firstName": "Remco",
+      "lastName": "Test",
+      "emailAddress": "email@email.angularsucks",
+      "address": null
+    }
+  }
+]
