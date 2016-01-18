@@ -13,6 +13,7 @@ import com.infosupport.t2c3_android.activity.OrderListActivity;
 public class OrderActivityListTest extends ActivityUnitTestCase<OrderListActivity> {
 
     private Intent mLaunchIntent;
+    private Button launchNextButton;
 
     public OrderActivityListTest(Class<OrderListActivity> activityClass) {
         super(activityClass);
@@ -25,7 +26,7 @@ public class OrderActivityListTest extends ActivityUnitTestCase<OrderListActivit
         mLaunchIntent = new Intent(getInstrumentation()
                 .getTargetContext(), OrderListActivity.class);
         startActivity(mLaunchIntent, null, null);
-        final Button launchNextButton =
+        launchNextButton =
                 (Button) getActivity()
                         .findViewById(R.id.btnChangeOrder);
     }
@@ -33,10 +34,6 @@ public class OrderActivityListTest extends ActivityUnitTestCase<OrderListActivit
     @MediumTest
     public void testNextActivityWasLaunchedWithIntent() {
         startActivity(mLaunchIntent, null, null);
-        final Button launchNextButton =
-                (Button) getActivity()
-                        .findViewById(R.id.btnChangeOrder);
-        launchNextButton.performClick();
 
         final Intent launchIntent = getStartedActivityIntent();
         assertNotNull("Intent was null", launchIntent);
