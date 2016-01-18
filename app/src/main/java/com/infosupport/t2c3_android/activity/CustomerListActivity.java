@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.infosupport.t2c3_android.R;
-import com.infosupport.t2c3_android.pojo.Order;
-import com.infosupport.t2c3_android.service.OrderService;
+import com.infosupport.t2c3_android.pojo.CustomerData;
+import com.infosupport.t2c3_android.service.CustomerService;
 import com.infosupport.t2c3_android.service.RetrofitConn;
 
 import java.util.ArrayList;
@@ -27,21 +27,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * An activity representing a list of Orders. This activity
+ * An activity representing a list of Customers. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link OrderDetailActivity} representing
+ * lead to a {@link CustomerDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class OrderListActivity extends AppCompatActivity {
+public class CustomerListActivity extends AppCompatActivity {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
-    private static List<Order> ordersList = new ArrayList<>();
+    private static List<CustomerData> customersList = new ArrayList<>();
     private View recyclerView;
 
     //Change this to your local IP-Networking address to use the Spring REST implementation on your mobile phone
@@ -53,7 +53,7 @@ public class OrderListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_list);
+        setContentView(R.layout.activity_customer_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,20 +63,15 @@ public class OrderListActivity extends AppCompatActivity {
         //Singleton for connecting to REST API
         retrofit = RetrofitConn.INSTANCE.init(BASE_URL);
 
-
-//        ArrayList<Order> orders = new ArrayList<Order>();
-//        orderAdapter = new OrderAdapter(this, orders);
-
-        //Add orders to adapter
-
-        recyclerView = findViewById(R.id.order_list);
+        //Add customers to adapter
+        recyclerView = findViewById(R.id.customer_list);
         assert recyclerView != null;
 
-        //retrieve from REST OrderService call
+        //retrieve from REST CustomerService call
 
-        retrieveOrders();
+        retrieveCustomers();
 
-        if (findViewById(R.id.order_detail_container) != null) {
+        if (findViewById(R.id.customer_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
             // If this view is present, then the
@@ -89,37 +84,32 @@ public class OrderListActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        retrieveOrders();
+        retrieveCustomers();
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new OrderRecyclerViewAdapter(ordersList));
+        recyclerView.setAdapter(new CustomerRecyclerViewAdapter(customersList));
     }
 
-    public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecyclerViewAdapter.ViewHolder> {
+    public class CustomerRecyclerViewAdapter extends RecyclerView.Adapter<CustomerRecyclerViewAdapter.ViewHolder> {
 
-        private final List<Order> mValues;
+        private final List<CustomerData> mValues;
 
-        public OrderRecyclerViewAdapter(List<Order> orders) {
-            mValues = orders;
+        public CustomerRecyclerViewAdapter(List<CustomerData> customerData) {
+            mValues = customerData;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.order_list_content, parent, false);
+                    .inflate(R.layout.customer_list_content, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mOrderIdView.setText(mValues.get(position).id.toString());
-            holder.mNumberOfItemsView.setText(String.valueOf(mValues.get(position).items.size()));
-            holder.mOrderTotalPriceView.setText(String.valueOf(mValues.get(position).totalPrice));
-
-            //TODO: WORKAROUND change when default status is changed
-            holder.mStatusView.setText(String.valueOf(mValues.get(position).status.toString()));
+            holder.mCustomerIdView.setText(mValues.get(position).id.toString());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,16 +118,16 @@ public class OrderListActivity extends AppCompatActivity {
                         Bundle arguments = new Bundle();
 
                         //TODO: Check this line
-                        arguments.putString(OrderDetailFragment.ARG_ITEM_ID, holder.mItem.id.toString());
-                        OrderDetailFragment fragment = new OrderDetailFragment();
+                        arguments.putString(CustomerDetailFragment.ARG_CUSTOMER_ID, holder.mItem.id.toString());
+                        CustomerDetailFragment fragment = new CustomerDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.order_detail_container, fragment)
+                                .replace(R.id.customer_detail_container, fragment)
                                 .commit();
                     } else {
                         Context context = v.getContext();
-                        Intent intent = new Intent(context, OrderDetailActivity.class);
-                        intent.putExtra(OrderDetailFragment.ARG_ITEM_ID, holder.mItem.id.toString());
+                        Intent intent = new Intent(context, CustomerDetailActivity.class);
+                        intent.putExtra(CustomerDetailFragment.ARG_CUSTOMER_ID, holder.mItem.id.toString());
 
                         context.startActivity(intent);
                     }
@@ -152,38 +142,33 @@ public class OrderListActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
-            public final TextView mOrderIdView;
-            public final TextView mNumberOfItemsView;
-            public final TextView mOrderTotalPriceView;
-            public final TextView mStatusView;
-            public Order mItem;
+            public final TextView mCustomerIdView;
+
+            public CustomerData mItem;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mOrderIdView = (TextView) view.findViewById(R.id.tvOrderId);
-                mNumberOfItemsView = (TextView) view.findViewById(R.id.tvNumberOfItems);
-                mOrderTotalPriceView = (TextView) view.findViewById(R.id.tvOderTotalPrice);
-                mStatusView = (TextView) view.findViewById(R.id.tvStatus);
+                mCustomerIdView = (TextView) view.findViewById(R.id.tvCustomerID);
             }
 
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mNumberOfItemsView.getText() + "'";
-            }
+//            @Override
+//            public String toString() {
+//                return super.toString() + " '" + mNumberOfItemsView.getText() + "'";
+//            }
         }
     }
 
-    private void retrieveOrders() {
-        OrderService orderService = retrofit.create(OrderService.class);
-        Call<List<Order>> callOrdersGetRequest = orderService.listOrders();
-        callOrdersGetRequest.enqueue(new Callback<List<Order>>() {
+    private void retrieveCustomers() {
+        CustomerService customerService = retrofit.create(CustomerService.class);
+        Call<List<CustomerData>> callCustomerGetRequest = customerService.listCustomers();
+        callCustomerGetRequest.enqueue(new Callback<List<CustomerData>>() {
 
             @Override
-            public void onResponse(Response<List<Order>> response) {
+            public void onResponse(Response<List<CustomerData>> response) {
                 int HTTPStatusCode = response.code();
                 if (HTTPStatusCode == 200) {
-                    ordersList = response.body();
+                    customersList = response.body();
                     setupRecyclerView((RecyclerView) recyclerView);
                 } else {
                     Log.d("Failed, HTTP code: ", String.valueOf(HTTPStatusCode));

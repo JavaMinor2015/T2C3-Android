@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="customer_list" type="id" />
+    <item name="customer_detail_container" type="id" />
+    <item name="tvCustomerID" type="id" />
+    <item name="detail_toolbar_customer" type="id" />
+    <item name="toolbar_layout_customer" type="id" />
+    <item name="btnChangeCustomer" type="id" />
+</resources>
