@@ -2,6 +2,7 @@ package com.infosupport.t2c3_android.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.infosupport.t2c3_android.R;
 import com.infosupport.t2c3_android.pojo.Order;
@@ -41,8 +43,9 @@ public class OrderDetailFragment extends Fragment {
      */
 
     public static final String ARG_ITEM_ID = "id";
-    public static OrderService orderService;
-    public Spinner statusSpinner;
+    private static OrderService orderService;
+    private Spinner statusSpinner;
+    private ToggleButton toggleBtnOrderPaid;
 
     private AlertDialog alertDialog;
     private Retrofit retrofit;
@@ -85,6 +88,7 @@ public class OrderDetailFragment extends Fragment {
                         ((TextView) rootView.findViewById(R.id.orderCustomerCity)).setText(mItem.customerData.address.city);
                         ((TextView) rootView.findViewById(R.id.orderCustomerEmail)).setText(mItem.customerData.emailAddress);
                         setStatusSpinner(statusSpinner);
+                        setToggleButtonPaid(toggleBtnOrderPaid);
                         showDetailFragment();
 
                     } else {
@@ -100,6 +104,10 @@ public class OrderDetailFragment extends Fragment {
         }
     }
 
+    private void setToggleButtonPaid(ToggleButton toggleBtnOrderPaid) {
+        toggleBtnOrderPaid.setChecked(mItem.paid);
+    }
+
     private void showDetailFragment() {
         Activity activity = this.getActivity();
         CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
@@ -113,25 +121,27 @@ public class OrderDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.order_detail, container, false);
         statusSpinner = (Spinner) rootView.findViewById(R.id.statusSpinner);
+        toggleBtnOrderPaid = (ToggleButton) rootView.findViewById(R.id.toggleBtnOrderPaid);
         Button changeOrderBtn = (Button) rootView.findViewById(R.id.btnChangeOrder);
         changeOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateStatus();
+                updateOrder();
             }
         });
         return rootView;
     }
 
-    private void updateStatus() {
+    private void updateOrder() {
         mItem.status = statusSpinner.getSelectedItem();
-        Call<Order> callPostOrderStatusRequest = orderService.postOrderStatus(mItem);
+        mItem.paid = toggleBtnOrderPaid.isChecked();
+        Call<Order> callPostOrderStatusRequest = orderService.editOrder(mItem);
         callPostOrderStatusRequest.enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Response<Order> response) {
                 int HTTPStatusCode = response.code();
                 if (HTTPStatusCode == 200) {
-
+                    changeToOrderListActivity();
                 } else {
                     Log.d("Failed, HTTP code: ", String.valueOf(HTTPStatusCode));
                 }
@@ -142,6 +152,10 @@ public class OrderDetailFragment extends Fragment {
                 Log.d("Error", t.getMessage());
             }
         });
+    }
+
+    private void changeToOrderListActivity() {
+        super.getActivity().finish();
     }
 
 
