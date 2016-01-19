@@ -59,7 +59,6 @@ public class CustomerDetailFragment extends Fragment {
         retrofit = RetrofitConn.INSTANCE.RESTWebService;
 
         if (getArguments().containsKey(ARG_CUSTOMER_ID)) {
-
             customerService = retrofit.create(CustomerService.class);
             Call<CustomerData> callCustomersGetRequest = customerService.getCustomer(getArguments().getString(ARG_CUSTOMER_ID));
             callCustomersGetRequest.enqueue(new Callback<CustomerData>() {
@@ -69,7 +68,17 @@ public class CustomerDetailFragment extends Fragment {
                     int HTTPStatusCode = response.code();
                     if (HTTPStatusCode == 200) {
                         mItem = response.body();
-                        ((TextView) rootView.findViewById(R.id.tvCustomerID)).setText(String.valueOf(mItem.id));
+                        ((TextView) rootView.findViewById(R.id.CustomerID)).setText(String.valueOf(mItem.id));
+                        ((TextView) rootView.findViewById(R.id.CustomerFirstAndLastName)).setText(String.valueOf(mItem.firstName) + " " + String.valueOf(mItem.lastName));
+                        if (mItem.address != null) {
+                            ((TextView) rootView.findViewById(R.id.CustomerStreetAndNumber)).setText(String.valueOf(mItem.address.street) + " " + String.valueOf(mItem.address.streetNumber));
+                            ((TextView) rootView.findViewById(R.id.CustomerZipcode)).setText(String.valueOf(mItem.address.zipcode));
+                            ((TextView) rootView.findViewById(R.id.CustomerCity)).setText(String.valueOf(mItem.address.city));
+                        }
+
+                        if (mItem.emailAddress != null) {
+                            ((TextView) rootView.findViewById(R.id.CustomerEmail)).setText(String.valueOf(mItem.emailAddress));
+                        }
                         showDetailFragment();
 
                     } else {
@@ -87,7 +96,7 @@ public class CustomerDetailFragment extends Fragment {
 
     private void showDetailFragment() {
         Activity activity = this.getActivity();
-        CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout_customer);
+        CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
         if (appBarLayout != null) {
             appBarLayout.setTitle("Customer-number: " + String.valueOf(mItem.id));
         }

@@ -29,6 +29,46 @@
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
                     tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Name"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Address"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Zip Code"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:textStyle="bold"
+                    android:text="City"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Email"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
 
             </LinearLayout>
 
@@ -38,7 +78,47 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5">
                 <TextView
-                    android:id="@+id/customerID"
+                    android:id="@+id/CustomerID"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:id="@+id/CustomerFirstAndLastName"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:id="@+id/CustomerStreetAndNumber"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:id="@+id/CustomerZipcode"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:id="@+id/CustomerCity"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:id="@+id/CustomerEmail"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

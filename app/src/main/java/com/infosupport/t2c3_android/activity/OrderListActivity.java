@@ -114,7 +114,7 @@ public class OrderListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mOrderIdView.setText(mValues.get(position).id.toString());
+            holder.mOrderIdView.setText(String.valueOf(mValues.get(position).id));
             holder.mNumberOfItemsView.setText(String.valueOf(mValues.get(position).items.size()));
             holder.mOrderTotalPriceView.setText(String.valueOf(mValues.get(position).totalPrice));
 

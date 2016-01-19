@@ -12,10 +12,10 @@ import retrofit2.http.Path;
  * Created by koen on 1/12/16.
  */
 public interface CustomerService {
-    @GET("customer")
+    @GET("customers")
     Call<List<CustomerData>> listCustomers();
 
-    @GET("customer/{id}")
+    @GET("customers/{id}")
     Call<CustomerData> getCustomer(@Path("id") String id);
 
 }

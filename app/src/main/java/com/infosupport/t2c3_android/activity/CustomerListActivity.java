@@ -109,7 +109,12 @@ public class CustomerListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mCustomerIdView.setText(mValues.get(position).id.toString());
+            holder.mCustomerIdView.setText(String.valueOf(mValues.get(position).id));
+            holder.mCustomerFirstAndLastNameView.setText(String.valueOf(mValues.get(position).firstName) + " " + String.valueOf(mValues.get(position).lastName));
+            if(mValues.get(position).address != null) {
+                holder.mCustomerZipCodeView.setText(String.valueOf(mValues.get(position).address.zipcode));
+                holder.mCustomerHouseNumberView.setText(String.valueOf(mValues.get(position).address.streetNumber));
+            }
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,6 +148,9 @@ public class CustomerListActivity extends AppCompatActivity {
         public class ViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mCustomerIdView;
+            public final TextView mCustomerFirstAndLastNameView;
+            public final TextView mCustomerZipCodeView;
+            public final TextView mCustomerHouseNumberView;
 
             public CustomerData mItem;
 
@@ -150,6 +158,10 @@ public class CustomerListActivity extends AppCompatActivity {
                 super(view);
                 mView = view;
                 mCustomerIdView = (TextView) view.findViewById(R.id.tvCustomerID);
+                mCustomerFirstAndLastNameView = (TextView) view.findViewById(R.id.tvCustomerFirstAndLastName);
+                mCustomerZipCodeView = (TextView) view.findViewById(R.id.tvCustomerZipCode);
+                mCustomerHouseNumberView = (TextView) view.findViewById(R.id.tvCustomerHouseNumber);
+
             }
 
 //            @Override

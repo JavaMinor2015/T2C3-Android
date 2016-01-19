@@ -22,7 +22,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar_order);
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.

@@ -22,7 +22,7 @@ public class CustomerDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_detail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar_customer);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar_order);
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.
