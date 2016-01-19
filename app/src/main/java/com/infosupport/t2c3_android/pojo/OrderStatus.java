@@ -5,7 +5,11 @@ package com.infosupport.t2c3_android.pojo;
  */
 public enum OrderStatus {
     PLACED("placed"),
+    IN_PROGRESS("in progress"),
+    WAIT_FOR_APPROVAL("wait for approval"),
+    ACCEPTED("accepted"),
     REJECTED("rejected"),
+    CANCELED("canceled"),
     SENT("sent");
 
     private final String status;
