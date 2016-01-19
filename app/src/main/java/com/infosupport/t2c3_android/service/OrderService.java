@@ -21,5 +21,5 @@ public interface OrderService {
     Call<Order> getOrder(@Path("id") String id);
 
     @PUT("employeeorder")
-    Call<Order> postOrderStatus(@Body Order order);
+    Call<Order> editOrder(@Body Order order);
 }

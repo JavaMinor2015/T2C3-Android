@@ -133,6 +133,14 @@
             android:layout_width="118dp"
             android:layout_height="wrap_content" />
 
+        <ToggleButton
+            android:id="@+id/toggleBtnOrderPaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment status"
+            android:textOn="Paid"
+            android:textOff="Not paid" />
+
         <Button
             android:id="@+id/btnChangeOrder"
             android:layout_width="wrap_content"

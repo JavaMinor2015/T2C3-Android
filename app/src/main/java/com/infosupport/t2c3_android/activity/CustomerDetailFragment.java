@@ -1,20 +1,26 @@
 package com.infosupport.t2c3_android.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.infosupport.t2c3_android.R;
 import com.infosupport.t2c3_android.pojo.CustomerData;
 import com.infosupport.t2c3_android.service.CustomerService;
 import com.infosupport.t2c3_android.service.RetrofitConn;
+
+import java.math.BigDecimal;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,6 +85,7 @@ public class CustomerDetailFragment extends Fragment {
                         if (mItem.emailAddress != null) {
                             ((TextView) rootView.findViewById(R.id.CustomerEmail)).setText(String.valueOf(mItem.emailAddress));
                         }
+                        ((EditText) rootView.findViewById(R.id.EditCustomerCredit)).setText(String.valueOf(mItem.creditLimit));
                         showDetailFragment();
 
                     } else {
@@ -110,32 +117,37 @@ public class CustomerDetailFragment extends Fragment {
         changeCustomerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                updateStatus();
+                updateCredit();
             }
         });
         return rootView;
     }
 
-//    private void updateStatus() {
-//        mItem.status = statusSpinner.getSelectedItem();
-//        Call<Order> callPostOrderStatusRequest = orderService.postOrderStatus(mItem);
-//        callPostOrderStatusRequest.enqueue(new Callback<Order>() {
-//            @Override
-//            public void onResponse(Response<Order> response) {
-//                int HTTPStatusCode = response.code();
-//                if (HTTPStatusCode == 200) {
-//
-//                } else {
-//                    Log.d("Failed, HTTP code: ", String.valueOf(HTTPStatusCode));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//                Log.d("Error", t.getMessage());
-//            }
-//        });
-//    }
+    private void updateCredit() {
+        String creditValueString = ((EditText) rootView.findViewById(R.id.EditCustomerCredit)).getText().toString();
+        BigDecimal creditValue = new BigDecimal(creditValueString);
+        Call<CustomerData> callEditCreditLimitRequest = customerService.editCreditLimit(mItem.id.toString(), creditValue);
+        callEditCreditLimitRequest.enqueue(new Callback<CustomerData>() {
+            @Override
+            public void onResponse(Response<CustomerData> response) {
+                int HTTPStatusCode = response.code();
+                if (HTTPStatusCode == 200) {
+                    changeToCustomerListActivity();
+                } else {
+                    Log.d("Failed, HTTP code: ", String.valueOf(HTTPStatusCode));
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d("Error", t.getMessage());
+            }
+        });
+    }
+
+    private void changeToCustomerListActivity() {
+        super.getActivity().finish();
+    }
 
 
     @Override

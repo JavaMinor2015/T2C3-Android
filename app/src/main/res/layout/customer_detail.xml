@@ -69,6 +69,14 @@
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
                     tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Credit limit"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
 
             </LinearLayout>
 
@@ -125,6 +133,13 @@
                     android:paddingStart="10dp"
                     android:textIsSelectable="true"
                     tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <EditText
+                    android:id="@+id/EditCustomerCredit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"/>
+
             </LinearLayout>
         </LinearLayout>
         <Button
