@@ -5,6 +5,9 @@ package com.infosupport.t2c3_android.pojo;
  */
 public enum OrderStatus {
     PLACED("placed"),
+    INPROGRESS("in progress"),
+    WAITFORAPPROVAL("wait for approval"),
+    ACCEPTED("accepted"),
     REJECTED("rejected"),
     SENT("sent");
 
