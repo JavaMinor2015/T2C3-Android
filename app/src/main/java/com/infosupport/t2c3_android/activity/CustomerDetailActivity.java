@@ -10,17 +10,17 @@ import android.view.MenuItem;
 import com.infosupport.t2c3_android.R;
 
 /**
- * An activity representing a single Order detail screen. This
+ * An activity representing a single Customer detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
- * in a {@link OrderListActivity}.
+ * in a {@link CustomerListActivity}.
  */
-public class OrderDetailActivity extends AppCompatActivity {
+public class CustomerDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_detail);
+        setContentView(R.layout.activity_customer_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar_order);
         setSupportActionBar(toolbar);
@@ -44,12 +44,12 @@ public class OrderDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(OrderDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(OrderDetailFragment.ARG_ITEM_ID));
-            OrderDetailFragment fragment = new OrderDetailFragment();
+            arguments.putString(CustomerDetailFragment.ARG_CUSTOMER_ID,
+                    getIntent().getStringExtra(CustomerDetailFragment.ARG_CUSTOMER_ID));
+            CustomerDetailFragment fragment = new CustomerDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.order_detail_container, fragment)
+                    .add(R.id.customer_detail_container, fragment)
                     .commit();
         }
     }
@@ -64,7 +64,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            navigateUpTo(new Intent(this, OrderListActivity.class));
+            navigateUpTo(new Intent(this, CustomerListActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
