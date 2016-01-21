@@ -1,11 +1,9 @@
 package com.infosupport.t2c3_android.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.infosupport.t2c3_android.R;
-import com.infosupport.t2c3_android.pojo.CustomerData;
+import com.infosupport.t2c3_android.pojo.Customer;
 import com.infosupport.t2c3_android.service.CustomerService;
 import com.infosupport.t2c3_android.service.RetrofitConn;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,8 +43,8 @@ public class CustomerDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    //TODO: Change with specific customer POJO
-    private CustomerData mItem;
+    //TODO: Change with specific customerData POJO
+    private Customer mItem;
     private View rootView;
 
     /**
@@ -66,11 +63,11 @@ public class CustomerDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_CUSTOMER_ID)) {
             customerService = retrofit.create(CustomerService.class);
-            Call<CustomerData> callCustomersGetRequest = customerService.getCustomer(getArguments().getString(ARG_CUSTOMER_ID));
-            callCustomersGetRequest.enqueue(new Callback<CustomerData>() {
+            Call<Customer> callCustomersGetRequest = customerService.getCustomer(getArguments().getString(ARG_CUSTOMER_ID));
+            callCustomersGetRequest.enqueue(new Callback<Customer>() {
 
                 @Override
-                public void onResponse(Response<CustomerData> response) {
+                public void onResponse(Response<Customer> response) {
                     int HTTPStatusCode = response.code();
                     if (HTTPStatusCode == 200) {
                         mItem = response.body();
@@ -126,10 +123,10 @@ public class CustomerDetailFragment extends Fragment {
     private void updateCredit() {
         String creditValueString = ((EditText) rootView.findViewById(R.id.EditCustomerCredit)).getText().toString();
         BigDecimal creditValue = new BigDecimal(creditValueString);
-        Call<CustomerData> callEditCreditLimitRequest = customerService.editCreditLimit(mItem.id.toString(), creditValue);
-        callEditCreditLimitRequest.enqueue(new Callback<CustomerData>() {
+        Call<Customer> callEditCreditLimitRequest = customerService.editCreditLimit(mItem.id.toString(), creditValue);
+        callEditCreditLimitRequest.enqueue(new Callback<Customer>() {
             @Override
-            public void onResponse(Response<CustomerData> response) {
+            public void onResponse(Response<Customer> response) {
                 int HTTPStatusCode = response.code();
                 if (HTTPStatusCode == 200) {
                     changeToCustomerListActivity();

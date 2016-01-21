@@ -14,7 +14,7 @@ import retrofit2.http.Path;
  * Created by koen on 1/12/16.
  */
 public interface OrderService {
-    @GET("order")
+    @GET("employeeorder")
     Call<List<Order>> listOrders();
 
     @GET("employeeorder/{id}")
