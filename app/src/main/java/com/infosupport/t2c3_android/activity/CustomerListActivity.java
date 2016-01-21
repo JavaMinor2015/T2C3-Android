@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.infosupport.t2c3_android.R;
-import com.infosupport.t2c3_android.pojo.CustomerData;
+import com.infosupport.t2c3_android.pojo.Customer;
 import com.infosupport.t2c3_android.service.CustomerService;
 import com.infosupport.t2c3_android.service.RetrofitConn;
 
@@ -41,13 +41,8 @@ public class CustomerListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
-    private static List<CustomerData> customersList = new ArrayList<>();
+    private static List<Customer> customersList = new ArrayList<>();
     private View recyclerView;
-
-    //Change this to your local IP-Networking address to use the Spring REST implementation on your mobile phone
-    private static final String BASE_URL = "http://10.32.42.76:6789";
-//    private static final String BASE_URL = "http://192.168.178.12:6789";
-
     private Retrofit retrofit;
 
     @Override
@@ -61,7 +56,7 @@ public class CustomerListActivity extends AppCompatActivity {
 
         //TODO: REST singleton implementation
         //Singleton for connecting to REST API
-        retrofit = RetrofitConn.INSTANCE.init(BASE_URL);
+        retrofit = RetrofitConn.INSTANCE.init();
 
         //Add customers to adapter
         recyclerView = findViewById(R.id.customer_list);
@@ -93,10 +88,10 @@ public class CustomerListActivity extends AppCompatActivity {
 
     public class CustomerRecyclerViewAdapter extends RecyclerView.Adapter<CustomerRecyclerViewAdapter.ViewHolder> {
 
-        private final List<CustomerData> mValues;
+        private final List<Customer> mValues;
 
-        public CustomerRecyclerViewAdapter(List<CustomerData> customerData) {
-            mValues = customerData;
+        public CustomerRecyclerViewAdapter(List<Customer> customer) {
+            mValues = customer;
         }
 
         @Override
@@ -152,7 +147,7 @@ public class CustomerListActivity extends AppCompatActivity {
             public final TextView mCustomerZipCodeView;
             public final TextView mCustomerHouseNumberView;
 
-            public CustomerData mItem;
+            public Customer mItem;
 
             public ViewHolder(View view) {
                 super(view);
@@ -173,11 +168,11 @@ public class CustomerListActivity extends AppCompatActivity {
 
     private void retrieveCustomers() {
         CustomerService customerService = retrofit.create(CustomerService.class);
-        Call<List<CustomerData>> callCustomerGetRequest = customerService.listCustomers();
-        callCustomerGetRequest.enqueue(new Callback<List<CustomerData>>() {
+        Call<List<Customer>> callCustomerGetRequest = customerService.listCustomers();
+        callCustomerGetRequest.enqueue(new Callback<List<Customer>>() {
 
             @Override
-            public void onResponse(Response<List<CustomerData>> response) {
+            public void onResponse(Response<List<Customer>> response) {
                 int HTTPStatusCode = response.code();
                 if (HTTPStatusCode == 200) {
                     customersList = response.body();
