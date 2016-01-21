@@ -9,4 +9,7 @@
     <!--<string name="columnStatus">Status</string>-->
     <string name="title_order_list">Orders</string>
     <string name="title_order_detail">Order Detail</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_customer_list">Customers</string>
+    <string name="title_customer_detail">Customer detail</string>
 </resources>

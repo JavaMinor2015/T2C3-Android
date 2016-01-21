@@ -28,7 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
                     android:textStyle="bold"
                     android:text="Name"
@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
                     android:textStyle="bold"
                     android:text="Address"
@@ -44,15 +44,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
                     android:textStyle="bold"
-                    android:text="Zipcode"
+                    android:text="Zip Code"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
                     android:textStyle="bold"
                     android:text="City"
@@ -60,15 +60,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
                     android:textStyle="bold"
-                    android:text="E-mail"
+                    android:text="Email"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Credit limit"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
 
             </LinearLayout>
 
@@ -78,71 +86,64 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5">
                 <TextView
-                    android:id="@+id/orderID"
+                    android:id="@+id/CustomerID"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
-                    android:padding="1dp"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
-                    android:id="@+id/orderCustomerFirstAndLastName"
+                    android:id="@+id/CustomerFirstAndLastName"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
-                    android:id="@+id/orderCustomerStreetAndNumber"
+                    android:id="@+id/CustomerStreetAndNumber"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
-                    android:id="@+id/orderCustomerZipcode"
+                    android:id="@+id/CustomerZipcode"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
-                    android:id="@+id/orderCustomerCity"
+                    android:id="@+id/CustomerCity"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
                 <TextView
-                    android:id="@+id/orderCustomerEmail"
+                    android:id="@+id/CustomerEmail"
                     style="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:textIsSelectable="true"
-                    tools:context="com.infosupport.t2c3_android.activity.OrderDetailFragment" />
+                    tools:context="com.infosupport.t2c3_android.activity.CustomerDetailFragment" />
+                <EditText
+                    android:id="@+id/EditCustomerCredit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"/>
+
             </LinearLayout>
         </LinearLayout>
-        <Spinner
-            android:id="@+id/statusSpinner"
-            android:layout_width="118dp"
-            android:layout_height="wrap_content" />
-
-        <ToggleButton
-            android:id="@+id/toggleBtnOrderPaid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Payment status"
-            android:textOn="Paid"
-            android:textOff="Not paid" />
-
         <Button
-            android:id="@+id/btnChangeOrder"
+            android:id="@+id/btnChangeCustomer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save" />

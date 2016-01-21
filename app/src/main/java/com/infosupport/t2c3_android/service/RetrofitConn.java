@@ -10,14 +10,17 @@ import retrofit2.Retrofit;
  */
 public enum RetrofitConn {
     INSTANCE;
+    //    private static final String BASE_URL = "http://10.32.42.76:6789";
+//    private static final String BASE_URL = "http://192.168.178.12:6789";
+    private static final String BASE_URL = "http://10.32.41.224:6789";
     public Retrofit RESTWebService = null;
 
-    public Retrofit init(String BASE_URL) {
-        if(this.RESTWebService == null) {
-        this.RESTWebService = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(new Gson()))
-                .build();
+    public Retrofit init() {
+        if (this.RESTWebService == null) {
+            this.RESTWebService = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(new Gson()))
+                    .build();
         }
 
         return RESTWebService;

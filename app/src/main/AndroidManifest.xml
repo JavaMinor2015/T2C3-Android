@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application>
+        android:debuggable="true"
         android:allowBackup="true"
         android:fullBackupContent="@xml/mybackupscheme">
         android:icon="@mipmap/ic_launcher"
@@ -16,10 +17,6 @@
             android:name=".activity.OrderListActivity"
             android:label="@string/title_order_list"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.OrderDetailActivity"
@@ -29,6 +26,30 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.infosupport.t2c3_android.activity.OrderListActivity" />
+        </activity>
+        <activity
+            android:name=".activity.CustomerListActivity"
+            android:label="@string/title_customer_list"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.CustomerDetailActivity"
+            android:label="@string/title_customer_detail"
+            android:parentActivityName=".activity.CustomerListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.infosupport.t2c3_android.activity.CustomerListActivity" />
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="Kantilever"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

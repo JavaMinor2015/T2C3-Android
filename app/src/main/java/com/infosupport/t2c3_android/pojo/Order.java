@@ -20,6 +20,9 @@ public class Order {
     @SerializedName("status")
     @Expose
     public Object status;
+    @SerializedName("paid")
+    @Expose
+    public Boolean paid;
     @SerializedName("items")
     @Expose
     public List<Item> items = new ArrayList<Item>();
